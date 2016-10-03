@@ -11,20 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center_vertical"
-        android:paddingLeft="30dp"
         android:text="Hello World!!"
-        android:textStyle="bold"
-        android:textColor="@color/movie_details_title_text"
-        android:textSize="@dimen/movie_details_title_text_size"
-        android:background="@color/movie_details_title_bg"/>
+        style="@style/Title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        style="@style/MovieDetails">
 
         <ImageView
             android:id="@+id/fragment_movie_details_image"
@@ -69,33 +64,25 @@
         android:id="@+id/fragment_movie_details_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:text="description"/>
+        android:text="description"
+        style="@style/MovieDetails.Description"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@color/movie_details_title_bg"/>
+        style="@style/MovieDetails.Divider"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:text="@string/movie_details_trailer"/>
+        android:text="@string/movie_details_trailer"
+        style="@style/MovieDetails.TrailerHeader"/>
 
     <LinearLayout
-        android:id="@+id/fragment_movie_details_linearlayout"
+        android:id="@+id/fragment_movie_details_trailerList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        style="@style/MovieDetails"/>
 
 </LinearLayout>

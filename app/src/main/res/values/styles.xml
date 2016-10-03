@@ -8,4 +8,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Movie Details Screen Styles -->
+    <style name="MovieDetails">
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:layout_marginRight">30dp</item>
+    </style>
+
+    <style name="Title">
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/movie_details_title_text</item>
+        <item name="android:textSize">@dimen/movie_details_title_text_size</item>
+        <item name="android:background">@color/movie_details_title_bg</item>
+    </style>
+
+    <style name="MovieDetails.Description" parent="MovieDetails">
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="MovieDetails.Divider" parent="MovieDetails">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@color/movie_details_title_bg</item>
+    </style>
+
+    <style name="MovieDetails.TrailerHeader" parent="MovieDetails">
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
 </resources>
