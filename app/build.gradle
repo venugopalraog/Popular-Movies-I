@@ -23,7 +23,7 @@ android {
     }
 
     buildTypes.each {
-        it.buildConfigField 'String', 'MOVIE_DB_KEY', "Add API KEY"
+        it.buildConfigField 'String', 'MOVIE_DB_KEY', "\"4e2c8302c3a2f9c56ded9d37fa11a7f8\""
     }
 }
 
@@ -39,4 +39,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
