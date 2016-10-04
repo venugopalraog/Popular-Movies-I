@@ -13,4 +13,12 @@
             android:stretchMode="columnWidth"
             android:gravity="center"/>
 
+        <TextView
+            android:id="@+id/fragment_popular_movie_infoTxt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:visibility="gone"/>
+
 </RelativeLayout>

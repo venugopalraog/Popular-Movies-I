@@ -12,8 +12,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import udacity.com.popularmovies.BuildConfig;
-import udacity.com.popularmovies.model.PopularMovies;
+import udacity.com.popularmovies.event.NetworkFailureEvent;
 import udacity.com.popularmovies.event.NetworkSucessEvent;
+import udacity.com.popularmovies.model.PopularMovies;
 
 /**
  * Created by venugopalraog on 9/25/16.
@@ -49,6 +50,8 @@ public class NetworkRequest {
             @Override
             public void onFailure(Call<PopularMovies> call, Throwable t) {
                 Log.d(TAG, "Received server Error response..." + t.getMessage());
+                String errorMsg = "Server Error" + t.getMessage();
+                EventBus.getDefault().post(new NetworkFailureEvent(errorMsg));
             }
         });
     }

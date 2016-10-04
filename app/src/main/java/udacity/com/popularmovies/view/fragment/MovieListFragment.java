@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import udacity.com.popularmovies.R;
+import udacity.com.popularmovies.common.CommonUtils;
+import udacity.com.popularmovies.event.NetworkFailureEvent;
 import udacity.com.popularmovies.event.NetworkSucessEvent;
 import udacity.com.popularmovies.model.PopularMovies;
 import udacity.com.popularmovies.network.NetworkRequest;
@@ -35,7 +38,9 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     private int mSelectedSortOrder = POPULAR_ITEM;
     private PopularMovies mPopularMovies;
+
     private GridView mGridView;
+    private TextView mInfoText;
     private PopularMoviesAdapter mMovieAdapter;
     private Dialog dialog;
 
@@ -43,6 +48,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_movie_list, container, false);
     }
 
@@ -51,14 +58,21 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         super.onViewCreated(view, savedInstanceState);
 
         EventBus.getDefault().register(this);
-        setHasOptionsMenu(true);
 
         mGridView = (GridView) view.findViewById(R.id.fragment_popular_movie_grid_view);
+        mInfoText = (TextView) view.findViewById(R.id.fragment_popular_movie_infoTxt);
+
         mMovieAdapter = new PopularMoviesAdapter(getActivity());
         mGridView.setAdapter(mMovieAdapter);
         mGridView.setOnItemClickListener(this);
-        createProgressBarDialogFragment();
-        NetworkRequest.getMovieModel();
+
+        if (CommonUtils.isConnected(getActivity())) {
+            createProgressBarDialogFragment();
+            NetworkRequest.getMovieModel();
+        } else {
+            mInfoText.setText(R.string.movie_list_no_network_error);
+            mInfoText.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -69,12 +83,19 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(NetworkSucessEvent event) {
-        mPopularMovies = (PopularMovies) event.getmData();
+        mPopularMovies = (PopularMovies) event.getData();
         hideProgressBar();
         if (mPopularMovies != null) {
             mMovieAdapter.setPopularMovieList(mPopularMovies.getMovies());
             mMovieAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(NetworkFailureEvent event) {
+        hideProgressBar();
+        mInfoText.setText(event.getErrorMsg());
+        mInfoText.setVisibility(View.VISIBLE);
     }
 
     @Override

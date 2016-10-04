@@ -44,6 +44,7 @@ public class MovieDetailsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(false);
         this.mMovie = getArguments().getParcelable(Constants.MOVIE_DATA);
     }

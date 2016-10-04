@@ -14,11 +14,8 @@ public class NetworkSucessEvent {
         this.mData = data;
     }
 
-    public Parcelable getmData() {
+    public Parcelable getData() {
         return mData;
     }
 
-    public void setmData(Parcelable mData) {
-        this.mData = mData;
-    }
 }
