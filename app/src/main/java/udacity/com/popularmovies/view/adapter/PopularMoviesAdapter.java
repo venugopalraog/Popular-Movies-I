@@ -4,13 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import udacity.com.popularmovies.R;
+import udacity.com.popularmovies.common.Constants;
 import udacity.com.popularmovies.model.Movie;
 
 /**
@@ -19,7 +20,6 @@ import udacity.com.popularmovies.model.Movie;
 
 public class PopularMoviesAdapter extends BaseAdapter {
 
-    private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185";
     private Context mContext;
     private List<Movie> mPopularMovieList;
 
@@ -58,18 +58,18 @@ public class PopularMoviesAdapter extends BaseAdapter {
     public View getView(int pos, View view, ViewGroup viewGroup) {
         ImageView imageView;
 
-        if (view == null) {
+        if (view != null && view instanceof ImageView) {
+            imageView = (ImageView) view;
+        } else {
             imageView = new ImageView(mContext);
             imageView.setAdjustViewBounds(true);
-            imageView.setLayoutParams(new GridView.LayoutParams(600, 600));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        } else {
-            imageView = (ImageView) view;
         }
 
         Picasso.with(mContext)
-               .load(IMAGE_URL + getItem(pos).getPosterPath())
-               .into(imageView);
+                .load(Constants.MOVIE_GRID_VIEW_IMAGE_URL + getItem(pos).getPosterPath())
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_errorloading)
+                .into(imageView);
 
         return imageView;
     }

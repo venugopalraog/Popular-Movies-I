@@ -6,8 +6,8 @@ package udacity.com.popularmovies.common;
 
 public class Constants {
 
-    public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185";
+    public static final String MOVIE_GRID_VIEW_IMAGE_URL = "http://image.tmdb.org/t/p/w780";
+    public static final String MOVIE_DETAILS_IMAGE_URL = "http://image.tmdb.org/t/p/w185";
     public static final String MOVIE_DATA = "MOVIE_DATA";
-
 
 }

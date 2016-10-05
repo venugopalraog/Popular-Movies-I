@@ -77,7 +77,9 @@ public class MovieDetailsFragment extends Fragment {
         mTimeTv.setText(movie.getReleaseDate());
 
         Picasso.with(getContext())
-                .load(Constants.IMAGE_URL + movie.getPosterPath())
+                .load(Constants.MOVIE_DETAILS_IMAGE_URL + movie.getPosterPath())
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_placeholder)
                 .into(mMoviePosterIv);
     }
 }
