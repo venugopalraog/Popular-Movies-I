@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="movie_details_title_bg">#009688</color>
     <color name="movie_details_title_text">#FFFFFF</color>
+    <color name="movie_details_trailer_list_divider">#616161</color>
 </resources>

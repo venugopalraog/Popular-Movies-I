@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import udacity.com.popularmovies.model.Movie;
+import udacity.com.popularmovies.model.MovieVideos;
 import udacity.com.popularmovies.model.PopularMovies;
 
 /**
@@ -21,5 +22,7 @@ public interface PopularMovieInterface {
     @GET("3/movie/{categories}")
     Call<PopularMovies> getMovieModel(@Path("categories") String categories, @Query("api_key") String apiKey);
 
+    @GET("3/movie/{movieId}/videos")
+    Call<MovieVideos> getVideosModel(@Path("movieId") String categories, @Query("api_key") String apiKey);
 
 }

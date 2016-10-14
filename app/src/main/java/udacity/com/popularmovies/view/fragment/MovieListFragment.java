@@ -18,6 +18,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import udacity.com.popularmovies.R;
 import udacity.com.popularmovies.common.CommonUtils;
 import udacity.com.popularmovies.event.NetworkFailureEvent;
@@ -33,51 +36,38 @@ import udacity.com.popularmovies.view.adapter.PopularMoviesAdapter;
 
 public class MovieListFragment extends Fragment implements AdapterView.OnItemClickListener{
 
-    private static final int POPULAR_ITEM = 1;
-    private static final int TOP_RATED_ITEM = 2;
-
-    private int mSelectedSortOrder = POPULAR_ITEM;
     private PopularMovies mPopularMovies;
 
-    private GridView mGridView;
-    private TextView mInfoText;
+    @BindView(R.id.fragment_popular_movie_grid_view) GridView mGridView;
+    @BindView(R.id.fragment_popular_movie_infoTxt)   TextView mInfoText;
+
     private PopularMoviesAdapter mMovieAdapter;
     private Dialog dialog;
+    private Unbinder mUnbinder;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
+
+        EventBus.getDefault().register(this);
+        mUnbinder = ButterKnife.bind(this, view);
         setRetainInstance(true);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_movie_list, container, false);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        EventBus.getDefault().register(this);
-
-        mGridView = (GridView) view.findViewById(R.id.fragment_popular_movie_grid_view);
-        mInfoText = (TextView) view.findViewById(R.id.fragment_popular_movie_infoTxt);
-
-        mMovieAdapter = new PopularMoviesAdapter(getActivity());
-        mGridView.setAdapter(mMovieAdapter);
-        mGridView.setOnItemClickListener(this);
-
-        if (CommonUtils.isConnected(getActivity())) {
-            createProgressBarDialogFragment();
-            NetworkRequest.getMovieModel();
-        } else {
-            mInfoText.setText(R.string.movie_list_no_network_error);
-            mInfoText.setVisibility(View.VISIBLE);
-        }
+        loadScreenData();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mUnbinder.unbind();
         EventBus.getDefault().unregister(this);
     }
 
@@ -117,10 +107,12 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
         switch (item.getItemId()) {
             case R.id.popular:
-                handleOptionMenuClicked(POPULAR_ITEM);
+                createProgressBarDialogFragment();
+                NetworkRequest.getMovieModel();
                 break;
             case R.id.top_rated:
-                handleOptionMenuClicked(TOP_RATED_ITEM);
+                createProgressBarDialogFragment();
+                NetworkRequest.getTopRatedMovieModel();
                 break;
             default:
                 return false;
@@ -129,18 +121,17 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         return false;
     }
 
-    private void handleOptionMenuClicked(int menuItem) {
-        mSelectedSortOrder = menuItem;
-        switch (menuItem) {
-            case POPULAR_ITEM:
-                createProgressBarDialogFragment();
-                NetworkRequest.getMovieModel();
-                break;
-            case TOP_RATED_ITEM:
-                createProgressBarDialogFragment();
-                NetworkRequest.getTopRatedMovieModel();
-                break;
-            default:
+    private void loadScreenData() {
+        mMovieAdapter = new PopularMoviesAdapter(getActivity());
+        mGridView.setAdapter(mMovieAdapter);
+        mGridView.setOnItemClickListener(this);
+
+        if (CommonUtils.isConnected(getActivity())) {
+            createProgressBarDialogFragment();
+            NetworkRequest.getMovieModel();
+        } else {
+            mInfoText.setText(R.string.movie_list_no_network_error);
+            mInfoText.setVisibility(View.VISIBLE);
         }
     }
 

@@ -2,14 +2,13 @@
 package udacity.com.popularmovies.model;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Movie  implements Parcelable{
+public class Movie  extends BaseModel{
 
     @SerializedName("poster_path")
     private String posterPath;
@@ -54,6 +53,7 @@ public class Movie  implements Parcelable{
     private double voteAverage;
 
     protected Movie(Parcel in) {
+        super(in);
         posterPath = in.readString();
         adult = in.readByte() != 0;
         overview = in.readString();
@@ -145,6 +145,7 @@ public class Movie  implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
         dest.writeString(posterPath);
         dest.writeByte((byte) (adult ? 1 : 0));
         dest.writeString(overview);

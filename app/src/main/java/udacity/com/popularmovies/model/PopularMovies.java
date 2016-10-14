@@ -2,14 +2,13 @@
 package udacity.com.popularmovies.model;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PopularMovies implements Parcelable{
+public class PopularMovies extends BaseModel{
 
     @SerializedName("page")
     private int page;
@@ -24,6 +23,7 @@ public class PopularMovies implements Parcelable{
     private int totalPages;
 
     protected PopularMovies(Parcel in) {
+        super(in);
         page = in.readInt();
         movies = in.createTypedArrayList(Movie.CREATOR);
         totalResults = in.readInt();
@@ -65,6 +65,7 @@ public class PopularMovies implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
         dest.writeInt(page);
         dest.writeTypedList(movies);
         dest.writeInt(totalResults);

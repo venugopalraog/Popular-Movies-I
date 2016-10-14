@@ -76,18 +76,24 @@
             android:layout_height="2dp"
             style="@style/MovieDetails.Divider"/>
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/movie_details_trailer"
             style="@style/MovieDetails.TrailerHeader"/>
 
-        <LinearLayout
-            android:id="@+id/fragment_movie_details_trailerList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            style="@style/MovieDetails"/>
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_movie_details_trailerList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MovieDetails"/>
+
+        </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
 </ScrollView>
