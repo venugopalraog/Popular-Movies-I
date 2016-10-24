@@ -12,8 +12,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import udacity.com.popularmovies.BuildConfig;
-import udacity.com.popularmovies.event.NetworkFailureEvent;
-import udacity.com.popularmovies.event.NetworkSucessEvent;
+import udacity.com.popularmovies.common.event.NetworkFailureEvent;
+import udacity.com.popularmovies.common.event.NetworkSucessEvent;
 import udacity.com.popularmovies.model.BaseModel;
 
 /**

@@ -1,4 +1,4 @@
-package udacity.com.popularmovies.db;
+package udacity.com.popularmovies.model.db;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -32,7 +32,7 @@ public class MovieContract {
 
         public static final String COLUMN_MOVIE_ID_KEY = "movie_id";
 
-        public static final String COLUMN_MOVIE_TITLE_KEY = "title_key";
+        public static final String COLUMN_MOVIE_NAME = "title_key";
 
         public static final String COLUMN_MOVIE_TRAILER_KEY = "trailer_key";
 
@@ -49,12 +49,13 @@ public class MovieContract {
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE;
+
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE;
 
         public static final String TABLE_NAME = "movie";
 
-        // Column with the foreign key into the Trailer Table
+        // Movie Id
         public static final String COLUMN_MOVIE_ID_KEY = "movie_id";
 
         // Movie Overview

@@ -1,4 +1,4 @@
-package udacity.com.popularmovies.event;
+package udacity.com.popularmovies.common.event;
 
 /**
  * Created by gubbave on 10/3/2016.

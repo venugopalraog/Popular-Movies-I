@@ -1,4 +1,4 @@
-package udacity.com.popularmovies.event;
+package udacity.com.popularmovies.common.event;
 
 import android.os.Parcelable;
 

@@ -9,8 +9,9 @@ import android.os.Parcelable;
 
 public class BaseModel implements Parcelable {
 
-    protected BaseModel(Parcel in) {
-    }
+    public BaseModel() {   }
+
+    protected BaseModel(Parcel in) {    }
 
     public static final Creator<BaseModel> CREATOR = new Creator<BaseModel>() {
         @Override
@@ -30,6 +31,5 @@ public class BaseModel implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-    }
+    public void writeToParcel(Parcel parcel, int i) {   }
 }

@@ -19,6 +19,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="udacity.com.popularmovies"
+            android:name=".model.db.MovieProvider" />
+
+        <service
+            android:name=".service.MovieDbService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

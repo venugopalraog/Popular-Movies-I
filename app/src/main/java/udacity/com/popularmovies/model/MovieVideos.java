@@ -19,6 +19,8 @@ public class MovieVideos extends BaseModel {
     @SerializedName("results")
     private List<TrailerInfo> trailerInfoList;
 
+    public MovieVideos() {  }
+
     protected MovieVideos(Parcel in) {
         super(in);
         id = in.readString();
@@ -29,8 +31,16 @@ public class MovieVideos extends BaseModel {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public List<TrailerInfo> getTrailerInfoList() {
         return trailerInfoList;
+    }
+
+    public void setTrailerInfoList(List<TrailerInfo> trailerInfoList) {
+        this.trailerInfoList = trailerInfoList;
     }
 
     public static final Creator<MovieVideos> CREATOR = new Creator<MovieVideos>() {

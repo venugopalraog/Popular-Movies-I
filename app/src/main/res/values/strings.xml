@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Popular Movies I</string>
-    <string name="menu_popular_item">sort by most popular</string>
-    <string name="menu_top_rated_item">sort by top rated</string>
+    <string name="menu_popular_item">Most Popular</string>
+    <string name="menu_top_rated_item">Top Rated</string>
+    <string name="menu_favorite_item">Favorite</string>
+    <string name="menu_favorite_delete_all_item">Delete All Favorite</string>
     <string name="movie_details_trailer">Trailer</string>
     <string name="movie_list_no_network_error">Device not connected to Internet.. Please check Internet Connection...</string>
     <string name="movie_list_server_error">Server Error...</string>
-
+    <string name="movie_list_no_data_error">No Movie Data Found ...</string>
 
 </resources>

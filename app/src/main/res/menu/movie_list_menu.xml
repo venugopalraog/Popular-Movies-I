@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:id="@+id/popular" android:title="@string/menu_popular_item"/>
     <item android:id="@+id/top_rated" android:title="@string/menu_top_rated_item"/>
+    <item android:id="@+id/favorite" android:title="@string/menu_favorite_item"/>
+    <item android:id="@+id/favorite_delete_all" android:title="@string/menu_favorite_delete_all_item"/>
+
+
 </menu>
