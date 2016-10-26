@@ -81,7 +81,8 @@ public class MovieDetailsFragment extends Fragment implements TrailerListAdapter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mMovie = getArguments().getParcelable(Constants.MOVIE_DATA);
+        if (getArguments() != null)
+            this.mMovie = getArguments().getParcelable(Constants.MOVIE_DATA);
     }
 
     @Nullable
@@ -128,6 +129,7 @@ public class MovieDetailsFragment extends Fragment implements TrailerListAdapter
     }
 
     private void loadScreenData(Movie movie) {
+        if (movie == null) return;
         mDescriptionTv.setText(movie.getOverview());
         mTitleTv.setText(movie.getOriginalTitle());
         mRatingTv.setText(movie.getVoteAverage() + "/10");

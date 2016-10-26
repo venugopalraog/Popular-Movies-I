@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.activity.MovieDetailsActivity"/>
+
         <provider
             android:authorities="udacity.com.popularmovies"
             android:name=".model.db.MovieProvider" />

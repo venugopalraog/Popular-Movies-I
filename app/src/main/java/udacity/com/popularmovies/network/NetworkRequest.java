@@ -53,7 +53,7 @@ public class NetworkRequest {
         });
     }
 
-    public static void getMovieModel() {
+    public static void getPopularMovieModel() {
         requestServer(createPopularMovieInterface().getMovieModel("popular", BuildConfig.MOVIE_DB_KEY));
     }
 

@@ -42,7 +42,7 @@ import udacity.com.popularmovies.view.adapter.PopularMoviesAdapter;
 /**
  * Created by gubbave on 9/26/2016.
  */
-public class MovieListFragment extends Fragment implements AdapterView.OnItemClickListener  {   //, LoaderManager.LoaderCallbacks<Cursor> {
+public class MovieGridFragment extends Fragment implements AdapterView.OnItemClickListener  {   //, LoaderManager.LoaderCallbacks<Cursor> {
 
 /*    public static final int STATE_POPULAR_MOVIE = 101;
     public static final int STATE_TOP_RATED_MOVIE = 102;
@@ -62,6 +62,14 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 //    private int mState = STATE_POPULAR_MOVIE;
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (mPopularMovies == null && CommonUtils.isConnected(getActivity())) {
+            NetworkRequest.getPopularMovieModel();
+        }
+    }
 
     @Nullable
     @Override
@@ -69,6 +77,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
         EventBus.getDefault().register(this);
         mUnbinder = ButterKnife.bind(this, view);
+
+        setRetainInstance(true);
         setHasOptionsMenu(true);
         return view;
     }
@@ -109,10 +119,12 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(NetworkSucessEvent event) {
-        mPopularMovies = (PopularMovies) event.getData();
-        hideProgressBar();
-        if (mPopularMovies != null) {
-            updateMovieAdapterList(mPopularMovies.getMovies());
+        if (event.getData() instanceof PopularMovies) {
+            mPopularMovies = (PopularMovies) event.getData();
+            hideProgressBar();
+            if (mPopularMovies != null) {
+                updateMovieAdapterList(mPopularMovies.getMovies());
+            }
         }
     }
 
@@ -129,10 +141,14 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+        ((Callback)getActivity()).onItemClicked(mPopularMovies.getMovies().get(position));
+/*
         getActivity().getSupportFragmentManager().beginTransaction()
                 .addToBackStack(MovieDetailsFragment.class.getSimpleName())
-                .replace(R.id.mainContainer, MovieDetailsFragment.newInstance(mPopularMovies.getMovies().get(position)))
+                .replace(R.id.movie_detail_container, MovieDetailsFragment.newInstance(mPopularMovies.getMovies().get(position)))
                 .commit();
+*/
     }
 
     @Override
@@ -147,7 +163,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
         switch (item.getItemId()) {
             case R.id.popular:
                 createProgressBarDialogFragment();
-                NetworkRequest.getMovieModel();
+                NetworkRequest.getPopularMovieModel();
                 break;
             case R.id.top_rated:
                 createProgressBarDialogFragment();
@@ -187,9 +203,6 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
         if (mPopularMovies != null) {
             updateMovieAdapterList(mPopularMovies.getMovies());
-        } else if (CommonUtils.isConnected(getActivity())) {
-            createProgressBarDialogFragment();
-            NetworkRequest.getMovieModel();
         } else {
             mInfoText.setText(R.string.movie_list_no_network_error);
             mInfoText.setVisibility(View.VISIBLE);
@@ -289,4 +302,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemCli
 
     }
 */
+
+    public interface Callback {
+        void onItemClicked(Movie movie);
+    }
 }
