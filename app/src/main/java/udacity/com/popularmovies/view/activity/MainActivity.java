@@ -28,13 +28,7 @@ public class MainActivity extends AppCompatActivity implements MovieGridFragment
                         .replace(R.id.movie_detail_container, new MovieDetailsFragment(), MovieDetailsFragment.class.getSimpleName())
                         .commit();
             }
-/*
-            if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.mainContainer, new MovieGridFragment(), MovieGridFragment.class.getSimpleName())
-                        .commit();
-            }
-*/
+
         } else {
             mTwoPane = false;
         }
@@ -52,15 +46,24 @@ public class MainActivity extends AppCompatActivity implements MovieGridFragment
 
     @Override
     public void onItemClicked(Movie movie) {
-        if (mTwoPane == true) {
+        if (mTwoPane) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.movie_detail_container, MovieDetailsFragment.newInstance(movie), MovieDetailsFragment.class.getSimpleName())
                     .commit();
         } else {
             Intent detailsIntent = new Intent(this, MovieDetailsActivity.class);
-            detailsIntent.putExtra(Constants.MOVIE_DETAILS_DATA, movie);
+            detailsIntent.putExtra(Constants.MOVIE_DATA, movie);
             startActivity(detailsIntent);
         }
 
+    }
+
+    @Override
+    public void onRefresDetailView(Movie movie) {
+        if (mTwoPane) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.movie_detail_container, MovieDetailsFragment.newInstance(movie), MovieDetailsFragment.class.getSimpleName())
+                    .commit();
+        }
     }
 }

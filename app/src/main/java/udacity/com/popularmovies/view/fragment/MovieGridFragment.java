@@ -51,6 +51,8 @@ public class MovieGridFragment extends Fragment implements AdapterView.OnItemCli
     private PopularMovies mPopularMovies;
 //    private List<Movie> mFavoriteMovieList;
 
+    private int mSelectedItem = 0;
+
 
     @BindView(R.id.fragment_popular_movie_grid_view) GridView mGridView;
     @BindView(R.id.fragment_popular_movie_infoTxt)   TextView mInfoText;
@@ -141,14 +143,8 @@ public class MovieGridFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-        ((Callback)getActivity()).onItemClicked(mPopularMovies.getMovies().get(position));
-/*
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .addToBackStack(MovieDetailsFragment.class.getSimpleName())
-                .replace(R.id.movie_detail_container, MovieDetailsFragment.newInstance(mPopularMovies.getMovies().get(position)))
-                .commit();
-*/
+        mSelectedItem = position;
+        ((Callback)getActivity()).onItemClicked(mPopularMovies.getMovies().get(mSelectedItem));
     }
 
     @Override
@@ -162,17 +158,21 @@ public class MovieGridFragment extends Fragment implements AdapterView.OnItemCli
 
         switch (item.getItemId()) {
             case R.id.popular:
+                mSelectedItem = 0;
                 createProgressBarDialogFragment();
                 NetworkRequest.getPopularMovieModel();
                 break;
             case R.id.top_rated:
+                mSelectedItem = 0;
                 createProgressBarDialogFragment();
                 NetworkRequest.getTopRatedMovieModel();
                 break;
             case R.id.favorite:
+                mSelectedItem = 0;
                 getFavoriteMovies();
                 break;
             case R.id.favorite_delete_all:
+                mSelectedItem = 0;
                 deleteAllFavorite();
                 break;
             default:
@@ -188,6 +188,7 @@ public class MovieGridFragment extends Fragment implements AdapterView.OnItemCli
         getActivity().getContentResolver().delete(MovieEntry.CONTENT_URI, null, null);
         getActivity().getContentResolver().delete(MovieContract.MovieTrailerEntry.CONTENT_URI, null, null);
 
+        mPopularMovies.getMovies().clear();
         updateMovieAdapterList(mPopularMovies.getMovies());
     }
 
@@ -233,6 +234,7 @@ public class MovieGridFragment extends Fragment implements AdapterView.OnItemCli
         };
 
         Cursor movieCursor = getActivity().getContentResolver().query(MovieEntry.CONTENT_URI, MOVIE_COLUMNS, null, null, null);
+        if (movieCursor == null) return;
 
         List<Movie> movies = new ArrayList<>();
 
@@ -253,6 +255,7 @@ public class MovieGridFragment extends Fragment implements AdapterView.OnItemCli
             mGridView.setVisibility(View.VISIBLE);
             mMovieAdapter.setPopularMovieList(movies);
             mMovieAdapter.notifyDataSetChanged();
+            ((Callback) getActivity()).onRefresDetailView(mPopularMovies.getMovies().get(mSelectedItem));
         } else {
             mGridView.setVisibility(View.GONE);
             setInfoText(getContext().getString(R.string.movie_list_no_data_error));
@@ -305,5 +308,6 @@ public class MovieGridFragment extends Fragment implements AdapterView.OnItemCli
 
     public interface Callback {
         void onItemClicked(Movie movie);
+        void onRefresDetailView(Movie movie);
     }
 }

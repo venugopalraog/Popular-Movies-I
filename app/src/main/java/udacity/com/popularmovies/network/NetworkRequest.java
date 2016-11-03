@@ -41,8 +41,10 @@ public class NetworkRequest {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
                 Log.d(TAG, "Received server response...");
-                Log.d(TAG, " response:: " + response.body().toString());
-                EventBus.getDefault().post(new NetworkSucessEvent(response.body()));
+                if (response.body() != null) {
+                    Log.d(TAG, " response:: " + response.body().toString());
+                    EventBus.getDefault().post(new NetworkSucessEvent(response.body()));
+                }
             }
 
             @Override
@@ -63,5 +65,9 @@ public class NetworkRequest {
 
     public static void getMovieTrailerModel(String movieId) {
         requestServer(createPopularMovieInterface().getVideosModel(movieId, BuildConfig.MOVIE_DB_KEY));
+    }
+
+    public static void getMovieReviewsModel(String movieId) {
+        requestServer(createPopularMovieInterface().getReviewsModel(movieId, BuildConfig.MOVIE_DB_KEY));
     }
 }

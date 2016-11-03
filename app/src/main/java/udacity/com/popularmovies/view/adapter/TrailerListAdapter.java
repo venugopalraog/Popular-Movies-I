@@ -7,13 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import udacity.com.popularmovies.R;
+import udacity.com.popularmovies.common.Constants;
 import udacity.com.popularmovies.model.TrailerInfo;
 
 /**
@@ -32,8 +34,7 @@ public class TrailerListAdapter extends RecyclerView.Adapter<TrailerListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class TrailerListAdapter extends RecyclerView.Adapter<TrailerListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.trailer_list_item_title) TextView trailerTitle;
+//        @BindView(R.id.trailer_list_item_title) TextView trailerTitle;
         @BindView(R.id.trailer_list_item_trailerPoster) ImageView trailerPoster;
 
 
@@ -77,7 +78,9 @@ public class TrailerListAdapter extends RecyclerView.Adapter<TrailerListAdapter.
         }
 
         public void bindData(TrailerInfo trailerInfo, final int position, final OnItemClickListener listener) {
-            trailerTitle.setText(trailerInfo.getName());
+
+            Picasso.with(mContext).load(Constants.YOUTUBE_IMAGE_URL + trailerInfo.getKey() + Constants.YOUTUBE_THUMB)
+                    .into(trailerPoster);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,7 +92,5 @@ public class TrailerListAdapter extends RecyclerView.Adapter<TrailerListAdapter.
         }
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int pos);
-    }
+
 }

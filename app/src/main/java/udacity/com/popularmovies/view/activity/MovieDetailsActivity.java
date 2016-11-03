@@ -21,7 +21,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         if (savedInstanceState == null) {
-            Movie movie = getIntent().getParcelableExtra(Constants.MOVIE_DETAILS_DATA);
+            Movie movie = getIntent().getParcelableExtra(Constants.MOVIE_DATA);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.movie_detail_container, MovieDetailsFragment.newInstance(movie), MovieDetailsFragment.class.getSimpleName())
                     .commit();
